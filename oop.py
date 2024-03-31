@@ -231,9 +231,11 @@ def redirecionar1(escolha):
     if escolha == 1:
         print(f"{cor_verde}Você será direcionado para a tela de login, caro cliente!{restaurar_cor}")
         carregar()
+        exit()
     elif escolha == 2:
         print(f"{cor_verde}Você será direcionado para a tela de login, Administrador!{restaurar_cor}")
         carregar()
+        exit()
     elif escolha == 3:
         print(f"{cor_verde}Nos vêmos na próxima, então!\n{cor_amarela}Até mais!")
         exit()
@@ -244,10 +246,5 @@ def redirecionar1(escolha):
 df, dir_db = init_db()
 escolha_do_menu_principal = menu_principal()
 print(df)
-if escolha_do_menu_principal == 1:
-    pass
-elif escolha_do_menu_principal == 2:
-    pass
-elif escolha_do_menu_principal == 3:
-    pass
+redirecionar1(escolha_do_menu_principal)
 root.mainloop()
