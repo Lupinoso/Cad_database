@@ -4,6 +4,7 @@ from time import sleep
 import os
 from tkinter import filedialog, Tk
 from openpyxl import Workbook
+from openpyxl import load_workbook
 
 #rodar loop do tk
 root = Tk()
@@ -172,29 +173,32 @@ def init_db():
         carregar()
         if os.path.exists(dir_padrao):
             print(f"{cor_verde}Banco de dados encontrado!{restaurar_cor}")
-            df = pd.read_excel(dir_padrao)
-            return df, dir_padrao
+            df_cliente = pd.read_excel(dir_padrao, sheet_name="Clientes")
+            df_adm = pd.read_excel(dir_padrao, sheet_name="Administradores")
+            return df_cliente, df_adm, dir_padrao
         else:
             print(f'{cor_vermelha}Banco de dados ainda nao foi criado!{restaurar_cor}')
             db_found, dir_db = load_db() 
             if db_found:
-                df = pd.read_excel(dir_db)
+                df_cliente = pd.read_excel(dir_padrao, sheet_name="Clientes")
+                df_adm = pd.read_excel(dir_padrao, sheet_name="Administradores")
                 print(f"{cor_verde}Banco de dados carregado!{restaurar_cor}")
-                return df, dir_db
+                return df_cliente, df_adm, dir_db
             elif not db_found:
                 while True:
                     db_found, dir_db = load_db()
                     if db_found:
-                        df = pd.read_excel(dir_db)
+                        df_cliente = pd.read_excel(dir_padrao, sheet_name="Clientes")
+                        df_adm = pd.read_excel(dir_padrao, sheet_name="Administradores")
                         print(f"{cor_verde}Banco de dados carregado!{restaurar_cor}")
-                        return df, dir_db
+                        return df_cliente,df_adm, dir_db
                     else:
                         pass
 
 class Cliente():
-    def init(self, nome, data_de_nascimento, email, cpf, senha):
+    def __init__(self, nome, data_de_nascimento, email, cpf, senha):
         self.nome = nome
-        self.nome = data_de_nascimento
+        self.data_nascimento = data_de_nascimento
         self.email = email
         self.cpf = cpf
         self.senha = senha
@@ -243,8 +247,16 @@ def redirecionar1(escolha):
 
 #funcionamento do programa
 
-df, dir_db = init_db()
+df_cliente, df_adm, dir_db = init_db()
 escolha_do_menu_principal = menu_principal()
-print(df)
+print(df_cliente)
+print(df_adm)
+
+cliente = Cliente(nome="ysaak", senha="1234", cpf="123", data_de_nascimento=23546778, email="ysaaklupino327@gmail.com")
+nova_linha = [cliente.nome, cliente.data_nascimento, cliente.email, cliente.cpf, cliente.senha]
+df_cliente = df_cliente._append(pd.Series(nova_linha, index=df_cliente.columns), ignore_index=True)
+print(df_cliente)
+
+
 redirecionar1(escolha_do_menu_principal)
 root.mainloop()
