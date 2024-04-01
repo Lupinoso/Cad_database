@@ -252,10 +252,10 @@ escolha_do_menu_principal = menu_principal()
 print(df_cliente)
 print(df_adm)
 
-cliente = Cliente(nome="ysaak", senha="1234", cpf="123", data_de_nascimento=23546778, email="ysaaklupino327@gmail.com")
-nova_linha = [cliente.nome, cliente.data_nascimento, cliente.email, cliente.cpf, cliente.senha]
-df_cliente = df_cliente._append(pd.Series(nova_linha, index=df_cliente.columns), ignore_index=True)
-print(df_cliente)
+#cliente = Cliente(nome="ysaak", senha="1234", cpf="123", data_de_nascimento=23546778, email="ysaaklupino327@gmail.com")
+#nova_linha = [cliente.nome, cliente.data_nascimento, cliente.email, cliente.cpf, cliente.senha]
+#df_cliente = df_cliente._append(pd.Series(nova_linha, index=df_cliente.columns), ignore_index=True)
+#print(df_cliente)
 
 
 redirecionar1(escolha_do_menu_principal)
