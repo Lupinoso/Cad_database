@@ -4,12 +4,14 @@ from time import sleep
 import os
 from tkinter import filedialog, Tk
 from openpyxl import Workbook
-from openpyxl import load_workbook
+
 
 #rodar loop do tk
-root = Tk()
-root.withdraw()
-
+if __name__ == "__main__":
+    root = Tk() 
+    root.withdraw()
+#Senha mestre
+senha_mestra = "abacaxi_assassino"
 
 ###parte visual###
 cor_vermelha = '\033[31m'
@@ -198,7 +200,7 @@ def init_db():
 class Cliente():
     def __init__(self, nome, data_de_nascimento, email, cpf, senha):
         self.nome = nome
-        self.data_nascimento = data_de_nascimento
+        self.data_nasc = data_de_nascimento
         self.email = email
         self.cpf = cpf
         self.senha = senha
@@ -218,45 +220,112 @@ def menu_principal():
     print(f"{cor_amarela}(2) {restaurar_cor}", end="")
     print("Logar como Administrador.")
     print(f"{cor_amarela}(3) {restaurar_cor}", end="")
+    print("Cadastrar Administrador.")
+    print(f"{cor_amarela}(4) {restaurar_cor}", end="")
     print("Sair do programa.")
     while True:
         try:    
             escolha = int(input(f"{cor_amarela}\nR: {restaurar_cor}"))
-            if escolha not in range(1,4):
+            if escolha not in range(1,5):
                 print(f"{cor_branca}{fundo_vermelho}Você precisar selecionar uma opção válida!{restaurar_cor}")
                 continue
             break
         except:
             print(f"{cor_branca}{fundo_vermelho}Você precisar selecionar uma opção válida!{restaurar_cor}")
             pass
-    return escolha
-                         
-def redirecionar1(escolha):
     if escolha == 1:
+        if df_cliente.empty:
+                print(f"{cor_vermelha}Não há clientes cadastrados!!\n", 
+                      f"{cor_amarela}\bPor favor, entre como administrador para mais opções!{restaurar_cor}")
+                sleep(1)
+                return False
         print(f"{cor_verde}Você será direcionado para a tela de login, caro cliente!{restaurar_cor}")
         carregar()
-        exit()
+        return 1
     elif escolha == 2:
+        if df_adm.empty:
+            print(f"{cor_vermelha}Não há administradores cadastrados!!\n{restaurar_cor}")
+            string = f"{cor_amarela}Redirecionando para o cadastro de administradores...{restaurar_cor}"
+            for letra in string:
+                print(f"{letra}", end="",flush=True)
+                sleep(0.05)
+            cad_adm = cadastrar_adm()
+            if cad_adm == False:
+                print(f"{cor_amarela}Retornando ao menu principal... {restaurar_cor}")
+                sleep(1)
+                return False
+        #falta fazer a parte se ja houver adms
         print(f"{cor_verde}Você será direcionado para a tela de login, Administrador!{restaurar_cor}")
+        sleep(1)
         carregar()
-        exit()
+        return 2
+        
     elif escolha == 3:
+        print(f"{cor_verde}Você será direcionado para a tela de cadastro de Administradores!{restaurar_cor}")
+        carregar()
+        return 3
+    elif escolha == 4:
         print(f"{cor_verde}Nos vêmos na próxima, então!\n{cor_amarela}Até mais!")
-        exit()
+        return 4
 
+def cadastrar_adm():
+    print(f'{cor_azul}Por favor selecione uma opção: {restaurar_cor}')
+    sleep(1)
+    print(f'''
+    {cor_amarela}(1){restaurar_cor} Cadastrar administrador. {cor_vermelha}(NECESSÁRIO SENHA MESTRA){restaurar_cor}
+    {cor_amarela}(2){restaurar_cor} Voltar ao menu anterior.
+    ''')
+    while True:
+        try:
+            escolha_cad_adm = int(input(f'{cor_azul}Escolha uma opção:\n{cor_amarela}R:{restaurar_cor} '))
+            if escolha_cad_adm not in range(1,3):
+                print(f"{cor_vermelha}Por favor selecione uma opção válida{restaurar_cor}")
+                continue
+            break
+        except:
+            print(f"{cor_vermelha}Por favor selecione uma opção válida{restaurar_cor}")
+            pass
+    if escolha_cad_adm == 1:
+        r_senha_mestra = str(input(f'{cor_amarela}Por favor insira a senha mestra!\nR:{restaurar_cor} '))
+        if r_senha_mestra == senha_mestra:
+            print(f'{cor_verde}Senha Correta{restaurar_cor}')
+            sleep(1)
+            nome_adm = str(input('Qual o nome do administrador?\nR: '))
+            cpf_adm = str(input('Qual o cpf do administrador?\nR: '))
+            email_adm = str(input('Qual o email do administrador?\nR: '))
+            senha_adm = str(input('Defina uma senha!\nR: '))
+            data_nasc_adm = str(input('Qual o data de nascimento do administrador?\nR: '))
+            adm_criado = Cliente(nome_adm, data_nasc_adm, email_adm, cpf_adm, senha_adm)
+            carregar()
+            df_adm.loc[df_adm.shape[0]+1] = [adm_criado.nome, adm_criado.data_nasc, adm_criado.email, adm_criado.cpf, adm_criado.senha]
+            print(f'{cor_verde}Administrador criado com sucesso!{restaurar_cor}')
+            sleep(1)
+            return True
+        elif r_senha_mestra != senha_mestra:
+            print(f'{cor_vermelha}\nSenha incorreta{restaurar_cor}')
+            sleep(1)
+            return False
+    elif escolha_cad_adm == 2:
+        carregar()
+        return False
+            
 
 #funcionamento do programa
+if __name__ == "__main__":
+    df_cliente, df_adm, dir_db = init_db()
+    while True:
+        escolha_do_menu_principal = menu_principal()
+        if escolha_do_menu_principal == 1:
+            print("vai logar como cliente")
+            break
+        elif escolha_do_menu_principal == 2: 
+            break
+        elif escolha_do_menu_principal == 3: 
+            cadastrar_adm()
+        elif escolha_do_menu_principal == 4:
+            exit()
+        elif not escolha_do_menu_principal:
+            pass
+        
 
-df_cliente, df_adm, dir_db = init_db()
-escolha_do_menu_principal = menu_principal()
-print(df_cliente)
-print(df_adm)
-
-#cliente = Cliente(nome="ysaak", senha="1234", cpf="123", data_de_nascimento=23546778, email="ysaaklupino327@gmail.com")
-#nova_linha = [cliente.nome, cliente.data_nascimento, cliente.email, cliente.cpf, cliente.senha]
-#df_cliente = df_cliente._append(pd.Series(nova_linha, index=df_cliente.columns), ignore_index=True)
-#print(df_cliente)
-
-
-redirecionar1(escolha_do_menu_principal)
 root.mainloop()
