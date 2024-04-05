@@ -236,7 +236,7 @@ def menu_principal():
     if escolha == 1:
         if df_cliente.empty:
                 print(f"{cor_vermelha}Não há clientes cadastrados!!\n", 
-                      f"{cor_amarela}\bPor favor, entre como administrador para mais opções!{restaurar_cor}")
+                      f"{cor_amarela}\bPor favor, entre como administrador para cadastrar um cliente!{restaurar_cor}")
                 sleep(1)
                 return False
         print(f"{cor_verde}Você será direcionado para a tela de login, caro cliente!{restaurar_cor}")
@@ -247,13 +247,19 @@ def menu_principal():
             print(f"{cor_vermelha}Não há administradores cadastrados!!\n{restaurar_cor}")
             string = f"{cor_amarela}Redirecionando para o cadastro de administradores...{restaurar_cor}"
             for letra in string:
-                print(f"{letra}", end="",flush=True)
+                print(f"{letra}", end="", flush=True)
                 sleep(0.05)
             cad_adm = cadastrar_adm()
             if cad_adm == False:
                 print(f"{cor_amarela}Retornando ao menu principal... {restaurar_cor}")
                 sleep(1)
                 return False
+            elif cad_adm == True:
+                return 2
+        elif not df_adm.empty:
+            usuario = str(input(f'{cor_azul}Por favor insira o nome do administrador que deseja logar!\n{cor_amarela}R: {restaurar_cor}'))
+            print(usuario)
+            return 2
         #falta fazer a parte se ja houver adms
         print(f"{cor_verde}Você será direcionado para a tela de login, Administrador!{restaurar_cor}")
         sleep(1)
