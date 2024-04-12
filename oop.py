@@ -237,7 +237,7 @@ def menu_principal():
                       f"{cor_amarela}\bPor favor, entre como administrador para cadastrar um cliente!{restaurar_cor}")
                 sleep(1)
                 return False
-        print(f"{cor_verde}Você será direcionado para a tela de login, caro cliente!{restaurar_cor}")
+        print(f"{cor_amarela}Você será direcionado para a tela de login, caro cliente!{restaurar_cor}")
         carregar()
         return 1
     elif escolha == 2:
@@ -247,6 +247,7 @@ def menu_principal():
             for letra in string:
                 print(f"{letra}", end="", flush=True)
                 sleep(0.05)
+            print()
             cad_adm = cadastrar_adm()
             if cad_adm == False:
                 print(f"{cor_amarela}Retornando ao menu principal... {restaurar_cor}")
@@ -265,7 +266,7 @@ def menu_principal():
         return 2
         
     elif escolha == 3:
-        print(f"{cor_verde}Você será direcionado para a tela de cadastro de Administradores!{restaurar_cor}")
+        print(f"{cor_amarela}Você será direcionado para a tela de cadastro de Administradores!{restaurar_cor}")
         carregar()
         return 3
     elif escolha == 4:
@@ -276,9 +277,9 @@ def cadastrar_adm():
     print(f'{cor_azul}Por favor selecione uma opção: {restaurar_cor}')
     sleep(1)
     print(f'''
-    {cor_amarela}(1){restaurar_cor} Cadastrar administrador. {cor_vermelha}(NECESSÁRIO SENHA MESTRA){restaurar_cor}
-    {cor_amarela}(2){restaurar_cor} Voltar ao menu anterior.
-    ''')
+{cor_amarela}(1){restaurar_cor} Cadastrar administrador. {cor_vermelha}(NECESSÁRIO SENHA MESTRA){restaurar_cor}
+{cor_amarela}(2){restaurar_cor} Voltar ao menu anterior.
+''')
     while True:
         try:
             escolha_cad_adm = int(input(f'{cor_azul}Escolha uma opção:\n{cor_amarela}R:{restaurar_cor} '))

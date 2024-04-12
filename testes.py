@@ -14,17 +14,15 @@ arquivo_excel = openpyxl.load_workbook(CAMINHO_ARQUIVO_EXCEL)
 # Selecionar a planilha desejada
 planilha = arquivo_excel[NOME_PLANILHA]
 
-# Encontrar a última linha preenchida na planilha
 ultima_linha = planilha.max_row
 
-# Adicionar uma nova linha após a última linha preenchida
+
 nova_linha = ultima_linha + 1
 
-# Adicionar os dados à nova linha
-# Suponha que você tenha uma lista chamada 'dados' com os valores para cada coluna
+
 dados = pd.DataFrame({'A': [1, 2, 3],
-                    'B': [4, 5, 6],
-                    'C': [7, 8, 9]})
+                      'B': [4, 5, 6],
+                      'C': [7, 8, 9]})
 
 print(pd.DataFrame.info(dados))
 
