@@ -23,11 +23,11 @@ restaurar_cor = '\033[0m'
 cor_azul = '\033[34m'
 
 def carregar():
-    carregar = "Carregando"
-    for letra in carregar:
+    carregar_str = "Carregando"
+    for letra in carregar_str:
         sleep(0.15)
         print(f"{cor_amarela}{letra}{restaurar_cor}",end="",flush=True)
-    for i in range(4):
+    for x in range(4):
         sleep(0.15)
         print(f"{cor_amarela}.{restaurar_cor}",end="",flush=True)
     print("\n")
@@ -40,21 +40,21 @@ def safe_exist_db(dir):
         return False
 
 def create_db(dir):
-        wb = Workbook()
-        cliente = wb.active
-        cliente.title = "Clientes"
-        adm = wb.create_sheet("Administradores")
-        cliente["A1"] = "Nome"
-        cliente["B1"] = "Data de nascimento"
-        cliente["C1"] = "Email"
-        cliente["D1"] = "CPF"
-        cliente["E1"] = "Senha"
-        adm["A1"] = "Nome"
-        adm["B1"] = "Data de nascimento"
-        adm["C1"] = "Email"
-        adm["D1"] = "CPF"
-        adm["E1"] = "Senha"
-        wb.save(f"{dir}")
+    wb = Workbook()
+    cliente = wb.active
+    cliente.title = "Clientes"
+    adm = wb.create_sheet("Administradores")
+    cliente["A1"] = "Nome"
+    cliente["B1"] = "Data de nascimento"
+    cliente["C1"] = "Email"
+    cliente["D1"] = "CPF"
+    cliente["E1"] = "Senha"
+    adm["A1"] = "Nome"
+    adm["B1"] = "Data de nascimento"
+    adm["C1"] = "Email"
+    adm["D1"] = "CPF"
+    adm["E1"] = "Senha"
+    wb.save(f"{dir}")
 
 def load_db():
     print(f"{cor_amarela}Escolha uma das opções abaixo:{restaurar_cor}")
@@ -75,10 +75,8 @@ def load_db():
                     break
                 else:
                     print(f"{fundo_vermelho}{cor_branca}Por favor escolha uma opção válida!{restaurar_cor}")
-                    pass
             except Exception:
                     print(f"{fundo_vermelho}{cor_branca}Por favor escolha um número!{restaurar_cor}")
-                    pass
                 
         if escolha == 1:
             dir_padrao = os.path.dirname(__file__)
