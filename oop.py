@@ -249,11 +249,11 @@ def menu_principal():
                 sleep(0.05)
             print()
             cad_adm = cadastrar_adm()
-            if cad_adm == False:
+            if not cad_adm:
                 print(f"{cor_amarela}Retornando ao menu principal... {restaurar_cor}")
                 sleep(1)
                 return False
-            elif cad_adm == True:
+            elif cad_adm:
                 return 2
         elif not df_adm.empty:
             usuario = str(input(f'{cor_azul}Por favor insira o nome do administrador que deseja logar!\n{cor_amarela}R: {restaurar_cor}'))
